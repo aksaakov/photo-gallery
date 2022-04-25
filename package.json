@@ -15,8 +15,8 @@
     "framer-motion": "^2.1.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-grid-gallery": "^0.5.5",
-    "react-scripts": "3.4.1"
+    "react-scripts": "3.4.1",
+    "sharp": "^0.30.4"
   },
   "scripts": {
     "start": "react-scripts start",
