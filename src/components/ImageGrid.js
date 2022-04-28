@@ -5,47 +5,26 @@ import ImageListItem from '@mui/material/ImageListItem';
 import Slide from '@mui/material/Slide';
 
 const ImageGrid = ({ setSelectedImg }) => {
-  const { docs } = useFirestore('images');
-
   const [imageSet, setImageSet] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
 
-  const getImages = (image) => {
-    const promise = new Promise(function(resolve, reject) {
-      let img = new Image();
-      img.src = image.url;
-      img.onload = () => {
-        console.log(img)
-        // console.log(x)
-        resolve(img);
-      };
-    });
-    return promise;
-  }
-
   useEffect(() => {
+    let docs;
+    const fetchData = async () => {
+      docs = await useFirestore('images');
+      setImageSet(docs);
+      setIsLoading(false);
+    }
     
-    const images = docs.map(getImages);
-    // console.log(images)
-    Promise.all(images).then((values) => {
-      // console.log(values);
-      if (images.length > 0) {
-        setImageSet(values);
-        setIsLoading(false);
-      }
-      },
-      function(error) {
-        console.log("error ", error);
-      }
-    )
-  }, [docs]);
+    fetchData();
+  }, []);
   
   const renderImage = (item) => {
     return (
       <ImageListItem key={item.src} onClick={() => setSelectedImg(item.src)}>
         <img
-          src={`${item.src}?w=248&fit=crop&auto=format`}
-          srcSet={`${item.src}?w=248&fit=crop&auto=format&dpr=2 2x`}
+          src={`${item.url}?w=248&fit=crop&auto=format`}
+          srcSet={`${item.url}?w=248&fit=crop&auto=format&dpr=2 2x`}
           alt={'not found'}
         />
       </ImageListItem>
