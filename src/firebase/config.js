@@ -1,6 +1,6 @@
-import * as firebase from 'firebase/app';
-import 'firebase/storage';
-import 'firebase/firestore';
+import { initializeApp }  from 'firebase/app';
+import { getStorage, ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
+import { getFirestore, Timestamp  } from  'firebase/firestore';
 
 var firebaseConfig = {
   apiKey: "AIzaSyBJTrPUKO92NIwS-iuMZXdhd44vTZFERY4",
@@ -13,11 +13,10 @@ var firebaseConfig = {
 };
 
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
 
-const projectStorage = firebase.storage();
-const projectFirestore = firebase.firestore();
-const timestamp = firebase.firestore.FieldValue.serverTimestamp;
+const projectStorage = getStorage(app);
+const projectFirestore = getFirestore(app);
 
-export { projectStorage, projectFirestore, timestamp };
+export { projectStorage, projectFirestore, Timestamp, ref, getDownloadURL, uploadBytesResumable };
 
