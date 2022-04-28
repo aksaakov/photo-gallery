@@ -11,17 +11,21 @@ const Modal = ({ setSelectedImg, selectedImg }) => {
     }
   }
 
+  const handleDelete = () => {
+    console.log(selectedImg.id)
+  }
+
   return (
     <motion.div className="backdrop" onClick={handleClick}
       // initial={{ opacity: 0 }}
       // animate={{ opacity: 1 }}
     >
-      <motion.img src={selectedImg} alt="enlarged pic" 
+      <motion.img src={selectedImg.url} alt="enlarged pic" 
         // initial={{ y: "-100vh" }}
         // animate={{ y: 0 }}
       />
       <IconButton aria-label="delete" style={{ color: 'black' }}>
-        <DeleteIcon />
+        <DeleteIcon onClick={handleDelete} />
       </IconButton>
     </motion.div>
   )

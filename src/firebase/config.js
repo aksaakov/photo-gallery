@@ -1,6 +1,6 @@
 import { initializeApp }  from 'firebase/app';
-import { getStorage } from 'firebase/storage';
-import { getFirestore, serverTimestamp  } from  'firebase/firestore';
+import { getStorage, ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
+import { getFirestore, Timestamp  } from  'firebase/firestore';
 
 var firebaseConfig = {
   apiKey: "AIzaSyBJTrPUKO92NIwS-iuMZXdhd44vTZFERY4",
@@ -18,5 +18,5 @@ const app = initializeApp(firebaseConfig);
 const projectStorage = getStorage(app);
 const projectFirestore = getFirestore(app);
 
-export { projectStorage, projectFirestore, serverTimestamp };
+export { projectStorage, projectFirestore, Timestamp, ref, getDownloadURL, uploadBytesResumable };
 

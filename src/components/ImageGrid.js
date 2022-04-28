@@ -5,23 +5,21 @@ import ImageListItem from '@mui/material/ImageListItem';
 import Slide from '@mui/material/Slide';
 
 const ImageGrid = ({ setSelectedImg }) => {
-  const [imageSet, setImageSet] = useState(undefined);
-  const [isLoading, setIsLoading] = useState(true);
+  // const [imageSet, setImageSet] = useState(undefined);
+  const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    let docs;
-    const fetchData = async () => {
-      docs = await useFirestore('images');
-      setImageSet(docs);
-      setIsLoading(false);
-    }
-    
-    fetchData();
-  }, []);
+  const { docs } = useFirestore('images');
+  // console.log(docs)
+  // useEffect(() => {
+  //   if (docs.length > 0) {
+  //     setIsLoading(false)
+  //   }
+  // }, [docs]);
   
   const renderImage = (item) => {
+    // console.log(item);
     return (
-      <ImageListItem key={item.src} onClick={() => setSelectedImg(item.src)}>
+      <ImageListItem key={item.id} onClick={() => setSelectedImg(item)}>
         <img
           src={`${item.url}?w=248&fit=crop&auto=format`}
           srcSet={`${item.url}?w=248&fit=crop&auto=format&dpr=2 2x`}
@@ -30,34 +28,17 @@ const ImageGrid = ({ setSelectedImg }) => {
       </ImageListItem>
     )
   }
-  
+
   return (
     isLoading ? <div> Loading...</div> : 
 
-    // <Box>
-
     <Slide direction="up" in={!isLoading} timeout={1000}>
     <ImageList variant="masonry" cols={3} gap={8}>
-    {imageSet.map((item) => (
+    {docs.map((item) => (
       renderImage(item)
     ))}
     </ImageList>
-
     </Slide>
-  // </Box>
-    
-
-    // <div className="img-grid">
-    //   {docs && docs.map(doc => (
-    //     <div className="img-wrap" key={doc.id} 
-    //       layout
-    //       whileHover={{ opacity: 1 }}s
-    //       onClick={() => setSelectedImg(doc.url)}
-    //     >
-    //       <img src={doc.url} alt="uploaded pic"/>
-    //     </div>
-    //   ))}
-    // </div>
   )
 }
 
